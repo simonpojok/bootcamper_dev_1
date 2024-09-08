@@ -2,6 +2,7 @@ import React from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SignUpPage from "./pages/signup/SignUpPage.jsx";
 import BootcampFeedsPage from "./pages/feeds/BootcampFeedsPage.jsx";
+import HomeDashboard from "./pages/dashboard/HomeDashboard.jsx";
 
 const router = createBrowserRouter([
     {
@@ -14,6 +15,11 @@ const router = createBrowserRouter([
         element: <SignUpPage/>,
         exact: true,
     },
+    {
+        path: '/dashboard',
+        element: <HomeDashboard/>,
+        exact: true,
+    }
 ])
 
 function App() {
