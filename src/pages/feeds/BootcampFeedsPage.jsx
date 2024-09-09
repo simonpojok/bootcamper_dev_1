@@ -8,7 +8,7 @@ export default function BootcampFeedsPage() {
         <div className="min-h-screen bg-gray-100 py-8">
             <div className="container mx-auto">
                 {courses.data.map((course) => (
-                    <FeedComponent course={course} />
+                    <FeedComponent key={course.id} course={course} />
                 ))}
             </div>
         </div>
