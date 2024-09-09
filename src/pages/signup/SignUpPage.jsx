@@ -1,7 +1,10 @@
 import backgroundImageUrl from '../../assets/images/bootcamp/bootcamp-background.jpg'
 import {Form, Formik} from "formik";
+import customInstance from '../../axios_http_client';
+import { useNavigate } from 'react-router-dom'; 
 
 export default function SignUpPage() {
+    const navigate = useNavigate(); 
     return (
         <div className="min-h-screen bg-cover bg-center"
              style={{backgroundImage: `url(${backgroundImageUrl})`}}>
@@ -11,15 +14,27 @@ export default function SignUpPage() {
                     <h2 className="text-2xl font-semibold text-blue-600 text-center mb-6">Create Your Account</h2>
 
                     <Formik initialValues={{
-                        username: '',
+                        name: '',
                         email: '',
                         password: '',
                         role: '',
-                    }} onSubmit={(values, {setSubmitting}) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
+                    }} onSubmit={async(values, {setSubmitting}) => {
+                        try {
+                            const response = await customInstance.post('/api/v1/auth/register', values);
+                            console.log(response.data);
+                              setTimeout(() => {
+                                alert('Account created successfully!');
                             setSubmitting(false);
                         }, 400);
+                        navigate('/');
+                        // navigate('/login');
+                        } catch (error) {
+                            console.error(error.response);
+                            alert(error.response.data.error);
+                            setSubmitting(false);
+
+                        }
+                      
                     }} validate={(values) => {
                         const errors = {};
                         if (!values.email) {
@@ -41,21 +56,21 @@ export default function SignUpPage() {
                               isSubmitting
                           }) => (
                             <form className="space-y-4" onSubmit={handleSubmit}>
-                                {/* Name */}
+                                {/* {errors} */}
                                 <div>
                                     <label className="block text-gray-700 font-semibold">Name</label>
                                     <input
                                         type="text"
                                         className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         placeholder="Enter your name"
-                                        name="username"
+                                        name="name"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        value={values.username}
+                                        value={values.name}
                                     />
 
                                     <small className="block text-gray-700 font-semibold">
-                                        {errors.username && touched.username && errors.username}
+                                        {errors.name && touched.name && errors.name}
                                     </small>
                                 </div>
 
@@ -106,8 +121,8 @@ export default function SignUpPage() {
                                         onBlur={handleBlur}
                                         value={values.role}
                                     >
-                                        <option value="student">Student</option>
-                                        <option value="mentor">Mentor</option>
+                                        <option value="user">User</option>
+                                        <option value="publisher">Publisher</option>
                                         <option value="admin">Admin</option>
                                     </select>
 
@@ -118,7 +133,7 @@ export default function SignUpPage() {
 
                                 {/* Submit Button */}
                                 <div>
-                                    <button disabled={isSubmitting}
+                                    <button disabled={isSubmitting} role='submit'
                                             className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
                                         Submit
                                     </button>
