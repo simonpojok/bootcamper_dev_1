@@ -4,6 +4,7 @@ import SignUpPage from "./pages/signup/SignUpPage.jsx";
 import BootcampFeedsPage from "./pages/feeds/BootcampFeedsPage.jsx";
 import HomeDashboard from "./pages/dashboard/HomeDashboard.jsx";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile.jsx";
+import Login from "./pages/Login.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/updateProfile",
     element: <UpdateProfile />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
     exact: true,
   },
 ]);
