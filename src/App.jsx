@@ -3,6 +3,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SignUpPage from "./pages/signup/SignUpPage.jsx";
 import BootcampFeedsPage from "./pages/feeds/BootcampFeedsPage.jsx";
 import HomeDashboard from "./pages/dashboard/HomeDashboard.jsx";
+import UpdateProfile from './pages/UpdateProfile/UpdateProfile.jsx';
 
 const router = createBrowserRouter([
     {
@@ -19,7 +20,12 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <HomeDashboard/>,
         exact: true,
-    }
+    },
+   {
+    path: '/UpdateProfile',
+    element: <UpdateProfile/>,
+    exact: true,
+   }
 ])
 
 function App() {
