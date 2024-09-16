@@ -1,10 +1,24 @@
-import React from "react";
+import React, { createContext } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUpPage from "./pages/signup/SignUpPage.jsx";
 import BootcampFeedsPage from "./pages/feeds/BootcampFeedsPage.jsx";
 import HomeDashboard from "./pages/dashboard/HomeDashboard.jsx";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile.jsx";
 import Login from "./pages/Login.jsx";
+
+export const AppContext = createContext();
+
+export const AppContextProvider = ({ children }) => {
+  const userToken = localStorage.getItem("authToken");
+
+  return (
+    <AppContext.Provider value={{
+      userToken
+    }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
 
 const router = createBrowserRouter([
   {
@@ -36,7 +50,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <React.StrictMode>
+      <AppContextProvider>
       <RouterProvider router={router} />
+      </AppContextProvider>
     </React.StrictMode>
   );
 }

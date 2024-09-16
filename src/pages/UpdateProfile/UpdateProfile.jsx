@@ -1,43 +1,15 @@
 import { Formik } from "formik";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import customInstance from "../../axios_http_client";
+import { AppContext, AppContextProvider } from "../../context";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE2MjJlNmE2ZDFkYWI3MzNlNTRmMSIsImlhdCI6MTcyNjA0Njc2NywiZXhwIjoxNzI4NjM4NzY3fQ.hqAq-LuKLSzh04u0a40r3di2RWz92uQ6DOq37fQMAqE";
 const url = "/api/v1/auth/updatedetails";
 
 const UpdateProfile = () => {
-  // const apiEndpoint = "/api/v1/auth/updatedetails";
-  // const [user, setUser]=useState([])
-  // const updatedDetails = {name:values.username, password:values.password, email:values.email, role:values.role}
-
-  useEffect(function () {
-    async function updateDetails() {
-      // const headers = {
-      //   Authorization: `Bearer ${token}`,
-      // }
-      // const data = await customInstance.put(url, {
-      //   name: values.username,
-      //   password: values.password,
-      //   email: values.email,
-      //   role: values.role,
-      // });
-      // console.log(data);
-    }
-  }, []);
-
-  // const handleSubmit = async (values, { setSubmitting }) => {
-  //   try {
-  //       // Make a PUT request with Axios to update user details
-  //       const response = await customInstance.put('/user/update', {
-  //           username: values.username,
-  //           email: values.email,
-  //       });
-
-  //       if (response.status === 200) {
-  //           console.log('User details updated successfully', response.data);
-  //           // Handle successful update (e.g., show a success
+  const { userToken, name } = useContext(AppContext);
+  console.log("userToken", userToken);
+  console.log("name", name);
 
   return (
     <Formik
@@ -60,7 +32,7 @@ const UpdateProfile = () => {
             },
             {
               headers: {
-                Authorization: `Bearer ${token}`, // Include the token here
+                Authorization: `Bearer ${userToken}`, // Include the token here
               },
             }
           );
@@ -75,63 +47,60 @@ const UpdateProfile = () => {
       }}
     >
       {({ values, errors, handleSubmit, handleChange, isSubmitting }) => (
-        <form
-          onSubmit={handleSubmit}
-          className="w-1/5 mx-auto mt-6 border flex flex-col gap-4"
-        >
-          <div className="flex gap-2 items-center justify-between">
+        <form onSubmit={handleSubmit} className="flex flex-col w-1/5 gap-4 mx-auto mt-6 border">
+          <div className="flex items-center justify-between gap-2">
             <label htmlFor="username">Name</label>
             <input
               type="text"
               name="name"
               value={values.name}
               onChange={handleChange}
-              className="border rounded-sm px-2 py-1 w-3/4"
+              className="w-3/4 px-2 py-1 border rounded-sm"
             />
             {errors.name && <small>{errors.name}</small>}
           </div>
 
-          <div className="flex gap-2 items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
               value={values.email}
               onChange={handleChange}
-              className="border rounded-sm px-2 py-1 w-3/4"
+              className="w-3/4 px-2 py-1 border rounded-sm"
             />
             {errors.email && <small>{errors.email}</small>}
           </div>
 
-          <div className="flex gap-2 items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
               value={values.password}
               onChange={handleChange}
-              className="border rounded-sm px-2 py-1 w-3/4"
+              className="w-3/4 px-2 py-1 border rounded-sm"
             />
             {errors.password && <small>{errors.password}</small>}
           </div>
 
-          <div className="flex gap-2 items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <label htmlFor="role">Role</label>
             <input
               type="text"
               name="role"
               value={values.role}
               onChange={handleChange}
-              className="border rounded-sm px-2 py-1 w-3/4"
+              className="w-3/4 px-2 py-1 border rounded-sm"
             />
             {errors.role && <small>{errors.role}</small>}
           </div>
 
-          <div className="flex  justify-center">
+          <div className="flex justify-center">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-blue-400 text-white px-2 py-1 rounded-md hover:bg-blue-500 cursor-pointer transition-all"
+              className="px-2 py-1 text-white transition-all bg-blue-400 rounded-md cursor-pointer hover:bg-blue-500"
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </button>
@@ -142,4 +111,11 @@ const UpdateProfile = () => {
   );
 };
 
-export default UpdateProfile;
+const UpdateProfilePage = () => {
+  return (
+    <AppContextProvider>
+      <UpdateProfile />
+    </AppContextProvider>
+  );
+};
+export default UpdateProfilePage;
