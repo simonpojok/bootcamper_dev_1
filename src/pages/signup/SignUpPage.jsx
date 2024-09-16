@@ -5,6 +5,19 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SignUpPage() {
     const navigate = useNavigate(); 
+     const registerUser = async (values, setSubmitting) => {
+        try {
+            const response = await customInstance.post('/api/v1/auth/register', values);
+            console.log(response.data);
+                alert('Account created successfully!');
+                setSubmitting(false);
+            navigate('/');
+        } catch (error) {
+            console.error(error.response);
+            alert(error.response?.data?.error || "An error occurred");
+            setSubmitting(false);
+        }
+    };
     return (
         <div className="min-h-screen bg-cover bg-center"
              style={{backgroundImage: `url(${backgroundImageUrl})`}}>
@@ -19,22 +32,7 @@ export default function SignUpPage() {
                         password: '',
                         role: '',
                     }} onSubmit={async(values, {setSubmitting}) => {
-                        try {
-                            const response = await customInstance.post('/api/v1/auth/register', values);
-                            console.log(response.data);
-                              setTimeout(() => {
-                                alert('Account created successfully!');
-                            setSubmitting(false);
-                        }, 400);
-                        navigate('/');
-                        // navigate('/login');
-                        } catch (error) {
-                            console.error(error.response);
-                            alert(error.response.data.error);
-                            setSubmitting(false);
-
-                        }
-                      
+                      registerUser(values, setSubmitting);
                     }} validate={(values) => {
                         const errors = {};
                         if (!values.email) {
