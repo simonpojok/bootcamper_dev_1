@@ -1,5 +1,5 @@
 import backgroundImageUrl from '../../assets/images/bootcamp/bootcamp-background.jpg'
-import {Form, Formik} from "formik";
+import {Formik} from "formik";
 import customInstance from '../../axios_http_client';
 import { useNavigate } from 'react-router-dom'; 
 
