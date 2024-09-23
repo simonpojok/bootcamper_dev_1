@@ -5,11 +5,16 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import customInstance from "../../axios_http_client";
 
 const defaultProfilePic = "https://via.placeholder.com/150"; // Placeholder image URL
-
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTE2MjJlNmE2ZDFkYWI3MzNlNTRmMSIsImlhdCI6MTcyNjA0Njc2NywiZXhwIjoxNzI4NjM4NzY3fQ.hqAq-LuKLSzh04u0a40r3di2RWz92uQ6DOq37fQMAqE";
 const url = "/api/v1/auth/updatedetails";
 
 const UpdateProfile = () => {
   const [profilePicPreview, setProfilePicPreview] = useState(defaultProfilePic);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
@@ -24,9 +29,8 @@ const UpdateProfile = () => {
             role: "",
             profilePicture: null,
           }}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
             try {
-              const userToken = localStorage.getItem("user_token");
               const formData = new FormData();
               formData.append("name", values.name);
               formData.append("email", values.email);
@@ -37,12 +41,19 @@ const UpdateProfile = () => {
 
               const response = await customInstance.put(url, formData, {
                 headers: {
-                  Authorization: `Bearer ${userToken}`,
+                  Authorization: `Bearer ${token}`,
                   "Content-Type": "multipart/form-data",
                 },
               });
 
               console.log("Response data:", response.data.data);
+
+              // Show success modal
+              setShowSuccessModal(true);
+
+              // Clear the form
+              resetForm();
+              setProfilePicPreview(defaultProfilePic);
             } catch (error) {
               console.error("Error updating details:", error);
             } finally {
@@ -142,7 +153,7 @@ const UpdateProfile = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2.5 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                className="w-full py-2.5 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
@@ -150,6 +161,22 @@ const UpdateProfile = () => {
           )}
         </Formik>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded shadow-lg text-center">
+            <h3 className="text-lg font-bold">Profile Updated Successfully!</h3>
+            <p>Your profile has been updated.</p>
+            <button
+              onClick={handleCloseModal}
+              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
