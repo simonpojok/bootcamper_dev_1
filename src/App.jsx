@@ -5,11 +5,15 @@ import BootcampFeedsPage from "./pages/feeds/BootcampFeedsPage.jsx";
 import HomeDashboard from "./pages/dashboard/HomeDashboard.jsx";
 import Login from "./pages/Login.jsx";
 
+import UpdateProfile from "./pages/UpdateProfile/UpdateProfile.jsx";
+import ErrorPage from './pages/feeds/ErrorPage.jsx';
+
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <BootcampFeedsPage />,
-    exact: true,
+     path: '/',
+     element: <BootcampFeedsPage/>,
+     errorElement: <ErrorPage/>,
+     // exact: true,
   },
   {
     path: "/sign-up",
@@ -21,10 +25,14 @@ const router = createBrowserRouter([
     element: <HomeDashboard />,
     exact: true,
   },
-
   {
     path: "/login",
     element: <Login />,
+    exact: true,
+  },
+  {
+    path: "/updateProfile",
+    element: <UpdateProfile />,
     exact: true,
   },
 ]);
