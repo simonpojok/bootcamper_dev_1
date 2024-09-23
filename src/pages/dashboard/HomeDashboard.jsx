@@ -83,7 +83,7 @@ const Footer = () => {
 
 const HomeDashboard = () => {
     const { userToken } = useContext(AppContext);
-    
+    console.log("userToken", userToken);
     if(!userToken) {
         return <Navigate to="/login"/>
     }
