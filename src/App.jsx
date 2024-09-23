@@ -11,9 +11,18 @@ export const AppContext = createContext();
 export const AppContextProvider = ({ children }) => {
   const userToken = localStorage.getItem("authToken");
 
+  const setUserToken = (token) => {
+    if(token){
+      localStorage.setItem("authToken", token);
+    } else {
+      localStorage.removeItem("authToken");
+    }
+  }
+
   return (
     <AppContext.Provider value={{
-      userToken
+      userToken,
+      setUserToken
     }}>
       {children}
     </AppContext.Provider>
@@ -51,7 +60,7 @@ function App() {
   return (
     <React.StrictMode>
       <AppContextProvider>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </AppContextProvider>
     </React.StrictMode>
   );

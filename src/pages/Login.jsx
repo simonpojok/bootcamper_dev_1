@@ -1,9 +1,14 @@
-import axios from "axios";
+// import axios from "axios";
+import { useContext } from "react";
+import { AppContext } from "../App";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+import customInstance from "../axios_http_client";
 
 export default function Login() {
+  const { setUserToken } = useContext(AppContext);
+
   // Initialie the input fields
   const initialValues = {
     email: "",
@@ -25,13 +30,14 @@ export default function Login() {
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       // Call Login API
-      const response = await axios.post("/api/v1/auth/login", values);
+      const response = await customInstance.post("/api/v1/auth/login", values);
 
       // Etract token from response
       const token = response.data.token;
 
       //   Store token in localStorage for authentication
-      localStorage.setItem("authToken", token);
+      // localStorage.setItem("authToken", token);
+      setUserToken(token);
 
       // Alert Successful Login
       alert("Login Successful!");
@@ -46,9 +52,9 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold text-gray-700 mb-6">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <h2 className="mb-6 text-2xl font-bold text-gray-700">
           Welcome Back. Please, kindly login
         </h2>
 
@@ -61,7 +67,7 @@ export default function Login() {
             <Form>
               {/* Email Field */}
               <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-600 mb-2">
+                <label htmlFor="email" className="block mb-2 text-gray-600">
                   Email
                 </label>
                 <Field
@@ -73,13 +79,13 @@ export default function Login() {
                 <ErrorMessage
                   name="email"
                   component="div"
-                  className="text-red-500 text-sm mt-1"
+                  className="mt-1 text-sm text-red-500"
                 />
               </div>
 
               {/* Password Field */}
               <div className="mb-4">
-                <label htmlFor="password" className="block text-gray-600 mb-2">
+                <label htmlFor="password" className="block mb-2 text-gray-600">
                   Password
                 </label>
                 <Field
@@ -91,7 +97,7 @@ export default function Login() {
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="text-red-500 text-sm mt-1"
+                  className="mt-1 text-sm text-red-500"
                 />
               </div>
 
@@ -99,12 +105,12 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+                className="w-full py-2 text-white transition duration-200 bg-blue-500 rounded-lg hover:bg-blue-600"
               >
                 {isSubmitting ? "Logging in..." : "Login"}
               </button>
 
-              <div className="text-center mt-4">
+              <div className="mt-4 text-center">
                 <Link
                   to={"/sign-up"}
                   className="text-blue-600 hover:text-blue-700"
