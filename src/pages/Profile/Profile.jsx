@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import customInstance from "../../axios_http_client";
+import { useApp } from "../../context/AppContext";
 
-const accessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTgyZWY1M2I4YzdjMTk1YmM0ZjI0YyIsImlhdCI6MTcyNjQ5MjQwNiwiZXhwIjoxNzI5MDg0NDA2fQ.YcCfW_OYTcePypAbKjxKjrfuSlM4psopgq-FyzarDII";
+// const accessToken =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTgyZWY1M2I4YzdjMTk1YmM0ZjI0YyIsImlhdCI6MTcyNjQ5MjQwNiwiZXhwIjoxNzI5MDg0NDA2fQ.YcCfW_OYTcePypAbKjxKjrfuSlM4psopgq-FyzarDII";
 
 const profileUrl = "/api/v1/auth/me";
 
 function Profile() {
   const [user, setUser] = useState({});
+  const { authToken } = useApp();
 
   useEffect(() => {
     async function fetch() {
       const headers = {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${authToken}`,
       };
 
       const { data } = await customInstance.get(profileUrl, { headers });

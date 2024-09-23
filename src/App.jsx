@@ -7,6 +7,8 @@ import Login from "./pages/Login.jsx";
 
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile.jsx";
 import ErrorPage from "./pages/feeds/ErrorPage.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
+import { AppProvider } from "./context/AppContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,12 +37,19 @@ const router = createBrowserRouter([
     element: <UpdateProfile />,
     exact: true,
   },
+  {
+    path: "/userProfile",
+    element: <Profile />,
+    exact: true,
+  },
 ]);
 
 function App() {
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <AppProvider>
+        <RouterProvider router={router} />
+      </AppProvider>
     </React.StrictMode>
   );
 }

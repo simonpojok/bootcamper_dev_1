@@ -1,10 +1,16 @@
-import axios from "axios";
+/* eslint-disable no-useless-escape */
+/* eslint-disable react/no-unescaped-entities */
+// import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import customInstance from "../axios_http_client";
+import { useApp } from "../context/AppContext";
 
 export default function Login() {
+  const { setUserToken } = useApp();
+  const navigate = useNavigate();
+
   // Initialie the input fields
   const initialValues = {
     email: "",
@@ -32,10 +38,14 @@ export default function Login() {
       const token = response.data.token;
 
       //   Store token in localStorage for authentication
-      localStorage.setItem("authToken", token);
+      // localStorage.setItem("authToken", token);
+      setUserToken(token);
 
       // Alert Successful Login
       alert("Login Successful!");
+
+      //Navigate
+      navigate("/dashboard");
 
       // Redirect
     } catch (error) {
