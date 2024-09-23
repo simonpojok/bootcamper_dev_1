@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import customInstance from "../../axios_http_client";
 
 const accessToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZGYwNzEzYzAzZjRiNzMxZmZlM2MxMCIsImlhdCI6MTcyNTg5MjM3MiwiZXhwIjoxNzI4NDg0MzcyfQ.Ttw-YGZQQoDKX4zz_n-as0SDvld1gZJq4c9wffAJgFU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTgyZWY1M2I4YzdjMTk1YmM0ZjI0YyIsImlhdCI6MTcyNjQ5MjQwNiwiZXhwIjoxNzI5MDg0NDA2fQ.YcCfW_OYTcePypAbKjxKjrfuSlM4psopgq-FyzarDII";
 
 const profileUrl = "/api/v1/auth/me";
 
