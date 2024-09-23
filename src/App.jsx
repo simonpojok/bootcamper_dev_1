@@ -3,13 +3,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUpPage from "./pages/signup/SignUpPage.jsx";
 import BootcampFeedsPage from "./pages/feeds/BootcampFeedsPage.jsx";
 import HomeDashboard from "./pages/dashboard/HomeDashboard.jsx";
+
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile.jsx";
+import ErrorPage from './pages/feeds/ErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <BootcampFeedsPage />,
-    exact: true,
+     path: '/',
+     element: <BootcampFeedsPage/>,
+     errorElement: <ErrorPage/>,
+     // exact: true,
   },
   {
     path: "/sign-up",
