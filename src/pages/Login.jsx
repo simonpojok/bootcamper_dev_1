@@ -2,6 +2,7 @@ import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+import customInstance from "../axios_http_client";
 
 export default function Login() {
   // Initialie the input fields
@@ -25,7 +26,7 @@ export default function Login() {
   const onSubmit = async (values, { setSubmitting }) => {
     try {
       // Call Login API
-      const response = await axios.post("/api/v1/auth/login", values);
+      const response = await customInstance.post("/api/v1/auth/login", values);
 
       // Etract token from response
       const token = response.data.token;
@@ -48,9 +49,9 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold text-gray-700 mb-6">
-          Welcome Back. Please, kindly login
-        </h2>
+        <h1 className="text-2xl font-bold text-blue-600 mb-6 text-center">
+          Welcome Back.
+        </h1>
 
         <Formik
           initialValues={initialValues}
