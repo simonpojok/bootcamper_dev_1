@@ -38,23 +38,31 @@ const coursesData = {
 
 export default function BootcampFeedsPage() {
     return (
-        <div className="min-h-screen bg-gray-100 py-8">
+        <div className="min-h-screen py-8 bg-gray-100">
+            <div>
+                <button>Button</button>
+                <div>
+                    <label htmlFor="username">Username</label>
+                    <input type="text" id="username" data-testid="username" />
+                </div>
+    
+            </div>
             <div className="container mx-auto">
                 {coursesData.data.map((course) => (
-                    <div key={course._id} className="bg-white rounded-lg shadow-md p-6 mb-4">
-                        <h2 className="text-2xl font-semibold text-blue-600 mb-2">
+                    <div key={course._id} className="p-6 mb-4 bg-white rounded-lg shadow-md">
+                        <h2 className="mb-2 text-2xl font-semibold text-blue-600" data-testid="title">
                             {course.title}
                         </h2>
-                        <p className="text-gray-700 mb-1">
+                        <p className="mb-1 text-gray-700">
                             <strong>Description: </strong>{course.description}
                         </p>
-                        <p className="text-gray-700 mb-1">
+                        <p className="mb-1 text-gray-700">
                             <strong>Weeks: </strong>{course.weeks} weeks
                         </p>
-                        <p className="text-gray-700 mb-1">
+                        <p className="mb-1 text-gray-700">
                             <strong>Tuition: </strong>${course.tuition}
                         </p>
-                        <p className="text-gray-700 mb-1">
+                        <p className="mb-1 text-gray-700">
                             <strong>Minimum Skill: </strong>{course.minimumSkill}
                         </p>
                         <p className={`text-gray-700 mb-1 ${course.scholarshipAvailable ? 'text-green-600' : 'text-red-600'}`}>
